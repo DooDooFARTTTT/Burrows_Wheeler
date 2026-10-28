@@ -7,12 +7,11 @@ def ciao(stringa_normale):
         
         stringa_normale = rearrangString(lista[i])
 
-
-    sortStringAlphabetically(lista)
+    print(lista)
+    lista = sortStringAlphabetically(lista)
     print(lista)
 
-
-        
+    print(getTrasformation(lista))
 
 def rearrangString(stringa):
     char_swp = stringa[0]
@@ -22,14 +21,43 @@ def rearrangString(stringa):
     return stringa_new
 
 def sortStringAlphabetically(lista):
-    for i in range (len(lista)):
+    isSorted = False
+
+    for i in range(len(lista)):
         for j in range(len(lista) - 1):
-            if lista[j][0] > lista[j + 1][0]:
+            word1 = lista[j]
+            word2 = lista[j + 1]
+            if(isWordSorted(lista[j], lista[j + 1]) == False):
                 parola = lista[j]
                 lista[j] = lista[j + 1]
                 lista[j + 1] = parola
-        
-    
 
+
+    return lista
+
+def isWordSorted(parola1, parola2):
+    for i in range(len(parola1)):
+        a = parola1[i]
+        b = parola2[i]
+        if parola1[i] > parola2[i]:
+            return False
+        elif parola1[i] < parola2[i]:
+            return True
+        
+    return True
+        
+def getTrasformation(lista):
+    stringa_trasformata = ""
+    for i in range(len(lista)):
+        stringa_trasformata = stringa_trasformata + lista[i][-1] 
+
+    return stringa_trasformata
 
 ciao("banana")
+
+'''
+lista = ["aaaa", "aaab", "babb", "aabb", "abbb", "bbbb"]
+lista.reverse();
+print(lista)
+sortStringAlphabetically(lista)
+print(lista)'''
