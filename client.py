@@ -13,6 +13,9 @@ while True:
 
     if stringa.startswith("ACK:"):
         print(client.recv(1024).decode())
+    if stringa.startswith("MSG:"):
+        continue
+        
 
     recieved_string = client.recv(1024)
 

@@ -18,6 +18,9 @@ while True:
     if recieved_string.startswith(b"ACK:"):
         recieved_string = recieved_string[4::]
         client.send("ciaoooo".encode())
-
+    elif recieved_string.startswith(b"MSG:"):
+        recieved_string = recieved_string[4::]
+        print(recieved_string.decode())
+        continue
 
     client.send(bwtAlgorithm(recieved_string.decode()).encode())
