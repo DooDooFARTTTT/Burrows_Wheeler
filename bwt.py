@@ -1,4 +1,5 @@
-def ciao(stringa_normale):
+def bwtAlgorithm(stringa_normale):
+    stringa_normale = stringa_normale.lower()
     lista = []
     stringa_normale = stringa_normale + "$"
 
@@ -7,11 +8,9 @@ def ciao(stringa_normale):
         
         stringa_normale = rearrangString(lista[i])
 
-    print(lista)
     lista = sortStringAlphabetically(lista)
-    print(lista)
 
-    print(getTrasformation(lista))
+    return getTrasformation(lista)
 
 def rearrangString(stringa):
     char_swp = stringa[0]
@@ -53,11 +52,6 @@ def getTrasformation(lista):
 
     return stringa_trasformata
 
-ciao("banana")
 
-'''
-lista = ["aaaa", "aaab", "babb", "aabb", "abbb", "bbbb"]
-lista.reverse();
-print(lista)
-sortStringAlphabetically(lista)
-print(lista)'''
+
+
