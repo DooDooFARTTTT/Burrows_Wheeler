@@ -8,7 +8,11 @@ client.connect((server_ip, port))
 
 while True:
     stringa = input("inserisci la parola da bwtizzare: ")
+
     client.send(stringa.encode())
+
+    if stringa.startswith("ACK:"):
+        print(client.recv(1024).decode())
 
     recieved_string = client.recv(1024)
 

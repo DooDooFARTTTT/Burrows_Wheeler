@@ -14,4 +14,10 @@ client, addr = server.accept()
 
 while True:
     recieved_string = client.recv(1024)
+
+    if recieved_string.startswith(b"ACK:"):
+        recieved_string = recieved_string[4::]
+        client.send("ciaoooo".encode())
+
+
     client.send(bwtAlgorithm(recieved_string.decode()).encode())
