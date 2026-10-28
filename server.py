@@ -1,4 +1,5 @@
 import socket
+import time
 from bwt import bwtAlgorithm
 
 port = 9999
@@ -18,6 +19,11 @@ while True:
     elif recieved_string.startswith(b"MSG:"):
         recieved_string = recieved_string[4::]
         print(recieved_string.decode())
+        continue
+    elif recieved_string.startswith(b"PING"):
+        arrivo = time.perf_counter()
+        delay = arrivo - float(client.recv(1024).decode())
+        client.send(str(delay).encode())
         continue
 
     client.send(bwtAlgorithm(recieved_string.decode()).encode())

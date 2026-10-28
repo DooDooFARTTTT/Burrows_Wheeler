@@ -1,4 +1,5 @@
 import socket
+import time
 
 server_ip = '127.0.0.1'
 port = 9999
@@ -14,6 +15,10 @@ while True:
     if stringa.startswith("ACK:"):
         print(client.recv(1024).decode())
     if stringa.startswith("MSG:"):
+        continue
+    if stringa.startswith("PING"):
+        client.send(str(time.perf_counter()).encode())
+        print(float(client.recv(1024).decode()) * 1000)
         continue
         
 
