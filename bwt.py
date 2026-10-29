@@ -1,16 +1,25 @@
-def bwtAlgorithm(stringa_normale):
+def bwtAlgorithm(stringa_normale, trace):
     stringa_normale = stringa_normale.lower()
     lista = []
+    lista_saved = []
     stringa_normale = stringa_normale + "$"
 
     for i in range(len(stringa_normale)):
         lista.append(stringa_normale)
-        
+        lista_saved.append(stringa_normale)
         stringa_normale = rearrangString(lista[i])
 
-    lista = sortStringAlphabetically(lista)
 
-    return getTrasformation(lista)
+    lista = sortStringAlphabetically(lista)
+    lista_saved = lista_saved + lista
+
+    trasformata = getTrasformation(lista)
+    lista_saved.append(trasformata)
+
+    if(trace == True):
+        return lista_saved
+    else:
+        return trasformata
 
 def rearrangString(stringa):
     char_swp = stringa[0]

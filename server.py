@@ -9,9 +9,16 @@ server.bind(("0.0.0.0", port))
 server.listen()
 client, addr = server.accept()
 
+def getTraceLenght(lista):
+    lenght = 0
+    for i in range(len(lista)):
+        lenght += len(lista[i])
+
+    return lenght
 
 while True:
     recieved_string = client.recv(1024)
+    trace = False
 
     if recieved_string.startswith(b"ACK:"):
         recieved_string = recieved_string[4::]
@@ -22,8 +29,21 @@ while True:
         continue
     elif recieved_string.startswith(b"PING"):
         arrivo = time.perf_counter()
-        delay = arrivo - float(client.recv(1024).decode())
+        recieved_string = recieved_string.decode()[5::]
+        delay = arrivo - float(recieved_string)
         client.send(str(delay).encode())
         continue
+    elif recieved_string.startswith(b"TRACE:"):
+        recieved_string = recieved_string[6::]
+        trace = True
 
-    client.send(bwtAlgorithm(recieved_string.decode()).encode())
+    trasformata = bwtAlgorithm(recieved_string.decode(), trace)
+
+    if trace:
+        client.send(str(getTraceLenght(trasformata)).encode())
+        print(trasformata)
+        risposta = "\n".join(trasformata)
+    else:
+        risposta = trasformata
+
+    client.sendall(risposta.encode())
