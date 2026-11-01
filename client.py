@@ -1,6 +1,4 @@
 import socket
-import time
-
 server_ip = '127.0.0.1'
 port = 9999
 
@@ -11,11 +9,6 @@ while True:
     stringa = input("inserisci la parola da bwtizzare: ")
     recieved_string = ""
 
-    if stringa.startswith("PING:"):
-            stringa = stringa + str(time.perf_counter())
-            client.send(stringa.encode())
-            print(float(client.recv(1024).decode()) * 1000)
-
     client.send(stringa.encode())
 
     if stringa.startswith("ACK:"):
@@ -23,13 +16,18 @@ while True:
     if stringa.startswith("MSG:"):
         continue
     if stringa.startswith("TRACE:"):
-        lenght = float(client.recv(4).decode())
+        lenght = float(client.recv(16).decode())
+        print("LUNGHEZZA: " + str(lenght) + "\n")
         recieved_bytes = 0
         while recieved_bytes < lenght:
-            chunk = client.recv(512)
+            chunk = client.recv(1024)
             recieved_string = recieved_string + chunk.decode()
             recieved_bytes = len(recieved_string)
-        print(recieved_string)
+            
+        print(recieved_string, flush=True)
+        chunk = ""
+        lenght = 0
+        recieved_bytes = 0
         continue
              
         

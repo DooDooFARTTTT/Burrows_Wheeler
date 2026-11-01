@@ -4,16 +4,20 @@ def bwtAlgorithm(stringa_normale, trace):
     lista_saved = []
     stringa_normale = stringa_normale + "$"
 
+    lista_saved.append("###PRIMA FASE###")
     for i in range(len(stringa_normale)):
         lista.append(stringa_normale)
-        lista_saved.append(stringa_normale)
+        lista_saved.append(stringa_normale + "\n")
         stringa_normale = rearrangString(lista[i])
 
 
     lista = sortStringAlphabetically(lista)
+    lista_saved.append("###SECONDA FASE###" + "\n")
     lista_saved = lista_saved + lista
 
     trasformata = getTrasformation(lista)
+
+    lista_saved.append("\n" + "###RISULTATO###" + "\n")
     lista_saved.append(trasformata)
 
     if(trace == True):
