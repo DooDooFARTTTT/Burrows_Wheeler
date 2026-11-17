@@ -1,37 +1,43 @@
+#script effettivo richiamato poi dal server
 def bwtAlgorithm(stringa_normale, trace):
-    stringa_normale = stringa_normale.lower()
-    lista = []
-    lista_saved = []
-    stringa_normale = stringa_normale + "$"
+    stringa_normale = stringa_normale.lower()       #tutta la stringa viene trasformata in caratteri lower
+    lista = []                                      #viene salvato il contenuto delle varie combinazioni ottenute
+    lista_saved = []                                #come lista, ma viene utilizzata se trace==True
+    stringa_normale = stringa_normale + "$"         #aggiunta del dollaro alla fine della parola da trasformare
 
-    lista_saved.append("###PRIMA FASE###")
-    for i in range(len(stringa_normale)):
+    lista_saved.append("###PRIMA FASE###")          
+    #Prima fase dell'algoritmo di bwt, la stringa viene ruotata e le varie rotazioni salvate
+    for i in range(len(stringa_normale)):                  
         lista.append(stringa_normale)
         lista_saved.append(stringa_normale + "\n")
         stringa_normale = rearrangString(lista[i])
 
 
-    lista = sortStringAlphabetically(lista)
+    lista = sortStringAlphabetically(lista)                 #le rotazioni vengono poi ordinate alfabeticamente
     lista_saved.append("###SECONDA FASE###" + "\n")
     lista_saved = lista_saved + lista
 
-    trasformata = getTrasformation(lista)
+    trasformata = getTrasformation(lista)                   #si ottiene la trasformata date le rotazioni ordinate
 
-    lista_saved.append("\n" + "###RISULTATO###" + "\n")
-    lista_saved.append(trasformata)
+    lista_saved.append("\n" + "###RISULTATO###" + "\n")     
+    lista_saved.append(trasformata)                         
 
-    if(trace == True):
+    #se trace==True allora ritorna la lista con salvati tutti gli step dell'algoritmo, altrimenti ritorna solo la trasformata
+    if(trace == True):                            
         return lista_saved
     else:
         return trasformata
 
-def rearrangString(stringa):
+#rotazione per singoila parola
+def rearrangString(stringa):                
     char_swp = stringa[0]
     stringa_new = stringa[1::]
     stringa_new = stringa_new + char_swp
 
     return stringa_new
 
+
+#effettua un sorting tra 2 rotazioni 
 def sortStringAlphabetically(lista):
     isSorted = False
 
@@ -39,7 +45,7 @@ def sortStringAlphabetically(lista):
         for j in range(len(lista) - 1):
             word1 = lista[j]
             word2 = lista[j + 1]
-            if(isWordSorted(lista[j], lista[j + 1]) == False):
+            if(isWordSorted(lista[j], lista[j + 1]) == False):  #lo switch tra 2 rotazioni
                 parola = lista[j]
                 lista[j] = lista[j + 1]
                 lista[j + 1] = parola
@@ -47,7 +53,9 @@ def sortStringAlphabetically(lista):
 
     return lista
 
-def isWordSorted(parola1, parola2):
+#verifica lettera per lettera fino a quando una delle due lettere confrontate non è numericamente più grande
+#se parola 1 è più piccola di parola 2, ritorna TRUE, altrimenti FALSE
+def isWordSorted(parola1, parola2): 
     for i in range(len(parola1)):
         a = parola1[i]
         b = parola2[i]
@@ -57,7 +65,8 @@ def isWordSorted(parola1, parola2):
             return True
         
     return True
-        
+
+#prende l'ultima lettera da tutte le rotazioni sortate
 def getTrasformation(lista):
     stringa_trasformata = ""
     for i in range(len(lista)):
