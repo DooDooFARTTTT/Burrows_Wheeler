@@ -4,20 +4,21 @@ def bwtAlgorithm(stringa_normale, trace):
     lista = []                                      #viene salvato il contenuto delle varie combinazioni ottenute
     lista_saved = []                                #come lista, ma viene utilizzata se trace==True
     stringa_normale = stringa_normale + "$"         #aggiunta del dollaro alla fine della parola da trasformare
-
-    lista_saved.append("###PRIMA FASE###")          
-    #Prima fase dell'algoritmo di bwt, la stringa viene ruotata e le varie rotazioni salvate
+    
+    #Prima fase, la stringa viene ruotata e le varie rotazioni salvate
+    lista_saved.append("###PRIMA FASE###")      
     for i in range(len(stringa_normale)):                  
         lista.append(stringa_normale)
         lista_saved.append(stringa_normale + "\n")
         stringa_normale = rearrangString(lista[i])
 
-
-    lista = sortStringAlphabetically(lista)                 #le rotazioni vengono poi ordinate alfabeticamente
+    #Seconda fase, le rotazioni vengono poi ordinate alfabeticamente (lessico grafico) con il $ come valore minore
+    lista = sortStringAlphabetically(lista)                 
     lista_saved.append("###SECONDA FASE###" + "\n")
     lista_saved = lista_saved + lista
 
-    trasformata = getTrasformation(lista)                   #si ottiene la trasformata date le rotazioni ordinate
+    #Terza fase, si ottiene la trasformata data l'ultimo carattere delle rotazioni ordinate
+    trasformata = getTrasformation(lista)                  
 
     lista_saved.append("\n" + "###RISULTATO###" + "\n")     
     lista_saved.append(trasformata)                         
